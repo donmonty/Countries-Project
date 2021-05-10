@@ -1,0 +1,31 @@
+{
+  "name": "Countries-Project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate": "npx sequelize db:migrate",
+    "migrate:reset": "npx sequelize db:migrate:undo:all && npm run migrate",
+    "seed-data": "npx sequelize db:seed:all",
+    "undo-seed": "npx sequelize db:seed:undo:all",
+    "fetch-countries": "node loadData.js",
+    "demo-online": "npm run undo-seed && npm run fetch-countries && npm run seed-data",
+    "demo-offline": "npm run undo-seed && npm run seed-data"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "dotenv": "^9.0.1",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "pg": "^8.6.0",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.6.2"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.2.0"
+  }
+}

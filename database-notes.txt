@@ -1,0 +1,96 @@
+
+
+// Install all necessary dependencies:
+=======================================
+- sequelize
+- sequelize-cli (as dev dependency)
+- pg
+- pg-hstore
+
+
+// Create .sequelizerc file with desired folder structure and other preferences
+
+// Execute 'npx sequelize-cli init' to create the empty project with the structure specified in the .sequelizerc file
+
+// Create a new Postgres database with the client of your choice
+
+// Create an .env file and add your database URL
+
+DEV_DATABASE_URL=postgres://postgres:398845110@localhost:5432/countries_test
+
+// Generate your initial migration file:
+============================================================
+Note: This will only create the migration file, not run the migration itself.
+- Run npx sequelize migration:create --name <migration_name>
+- Go to the migrations folder, open the migration file and write your up and down migrations code.
+
+// Add your models
+=============================================================
+- Go to the models folder and create a file for each model.
+- Open the index.js file inside the models folder and delete lines 12-16
+- Replace these lines with the following: 
+
+/////////////////////////////////////////////////////////////////////
+if (config.url) {
+  sequelize = new Sequelize(process.env[config.url], config);
+} else {
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
+}
+/////////////////////////////////////////////////////////////////////
+
+
+// Set config file
+=============================================================
+- Open the config.js file inside the 'config' folder. Replace the code inside it with the following:
+
+/////////////////////////////////////////////////////
+require('dotenv').config();
+
+module.exports = {
+  development: {
+    url: process.env.DEV_DATABASE_URL,
+    dialect: 'postgres',
+  },
+  test: {
+    url: process.env.TEST_DATABASE_URL,
+    dialect: 'postgres',
+  },
+  production: {
+    url: process.env.DATABASE_URL,
+    dialect: 'postgres',
+  },
+};
+/////////////////////////////////////////////////////
+
+// Run the initial migration
+==================================================
+- Execute 'npx sequelize db:migrate' 
+
+
+// Create your seed file
+==================================================
+- Run 'npx sequelize seed:create --name <seed name>'
+- Write your seed code
+
+
+// Create custom scripts in package.json
+==================================================
+Write additional scripts to run:
+
+- migrations
+- country data fetching
+- seeding
+- demo
+- etc.
+
+
+// Fetch the countries data from the API
+==================================================
+- Make sure the loadData.js file is inside the seeders folder
+- Run "npm run fetch-countries"
+
+
+// Seed the database with the countries data inside the JSON file
+==================================================================
+- Make sure the countryData.json file was created inside the seeders folder 
+- Run "npm run seed-data"
