@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     }
 
-  }, {});
+  }, { tableName: 'Country' });
 
   Country.associate = function(models) {
     Country.belongsToMany(models.Activity, { through: 'CountryActivity' })

@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false
     }
-  }, {});
+  }, { tableName: 'Activity' });
 
   Activity.associate = function(models) {
     Activity.belongsToMany(models.Country, { through: 'CountryActivity' })
