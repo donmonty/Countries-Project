@@ -32,8 +32,30 @@ async function getCountries(req, res) {
 }
 
 ////////// GET COUNTRY BY ID /////////////
-function getCountryById(req, res) {
-  return;
+async function getCountryById(req, res) {
+  const { code } = req.params;
+
+  // Check if param is a valid code, not numeric
+  if (!isNaN(code)) return res.status(400).json({ message: 'Invalid code!' });
+  if (code.length !== 3) return res.status(400).json({ message: 'Code must be 3 letters long!'});
+
+  // Convert code to uppercase
+  const okCode = code.toUpperCase();
+
+  // Fetch country by code
+  try {
+    const country = await models.Country.findOne({
+      where: { code: okCode },
+      include: [models.Activity]
+    });
+    
+    // If no country is found:
+    if (!country) return res.status(404).json({ message: 'Country not found!' });
+    return res.status(200).json({ data: country });
+
+  } catch (error) {
+    return res.status(500).json({ message: 'Something went wrong!'});
+  }
 }
 
 ////// CREATE ACTIVITY ////////////

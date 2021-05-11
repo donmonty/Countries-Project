@@ -31,3 +31,92 @@ ORDER BY ASC;
 Necesito traducir la query anterior a Sequelize
 
 `
+
+Create a country_activity record:
+- Link it to 3 countries
+===================================================
+
+SELECT "id", "name", "continent", "code", "capital", "subregion", "area", "population", "flag", "createdAt", "updatedAt" FROM "country" AS "Country" WHERE "Country"."name" = 'Mexico' LIMIT 1;
+
+SELECT "id", "name", "continent", "code", "capital", "subregion", "area", "population", "flag", "createdAt", "updatedAt" FROM "country" AS "Country" WHERE "Country"."name" = 'Argentina' LIMIT 1;
+
+SELECT "id", "name", "continent", "code", "capital", "subregion", "area", "population", "flag", "createdAt", "updatedAt" FROM "country" AS "Country" WHERE "Country"."name" = 'Chile' LIMIT 1;
+
+INSERT INTO "activity" ("id","name","difficulty","duration","season","createdAt","updatedAt") 
+VALUES (DEFAULT,$1,$2,$3,$4,$5,$6) 
+RETURNING "id","name","difficulty","duration","season","createdAt","updatedAt";
+
+SELECT "id", "CountryId", "ActivityId", "createdAt", "updatedAt" FROM "country_activity" AS "CountryActivity" WHERE "CountryActivity"."ActivityId" = 1 AND "CountryActivity"."CountryId" IN (145, 11, 48);
+
+INSERT INTO "country_activity" ("id","CountryId","ActivityId","createdAt","updatedAt") 
+VALUES 
+  (DEFAULT,145,1,'2021-05-11 07:39:08.163 +00:00','2021-05-11 07:39:08.163 +00:00'),
+  (DEFAULT,11,1,'2021-05-11 07:39:08.163 + 00:00','2021-05-11 07:39:08.163 +00:00'),
+  (DEFAULT,48,1,'2021-05-11 07:39:08.163 +00:00','2021-05-11 07:39:08.163 +00:00')
+  RETURNING "id","CountryId","ActivityId","createdAt","updatedAt";
+
+
+DB.deals.findAll({
+    where: {
+      InvestmentVehicleId: req.query.vehicle_id,
+    },
+    include: [
+      {
+        model: DB.DealAssets,
+        include: [DB.DealUpdates, DB.DealReturns],
+      },
+
+      {
+        model: DB.deals,
+        as: 'Parent',
+        include: {
+          model: DB.DealAssets,
+          include: {
+            model: DB.DealUpdates,
+          }
+        },
+      },
+      {
+        model: DB.deals,
+        as: 'Children',
+        include: {
+          model: DB.DealAssets,
+          include: {
+            model: DB.DealUpdates,
+          }
+        },
+        // attributes: ['id'],
+      },
+      DB.InvestmentVehicles,
+      DB.startups],
+    // include: [{ all: true, nested: true }],
+  })
+
+
+  DB.startups.findAll({
+    attributes: ['id', 'name'],
+    include: [{
+      model: DB.deals,
+      attributes: ['id', 'name'],
+      include: [
+        {
+          model: DB.InvestmentVehicles,
+          attributes: ['id', 'name'],
+        },
+      ],
+    }],
+  })
+
+  exports.GetSpecificStartupUpdates = (req, res, next) => {
+  DB.updates.findAll({
+    where: {
+      startupId: req.params.id,
+    },
+    include: [DB.metrics],
+    order: [['createdAt', 'DESC']],
+  })
+    .then((updates) => res.status(200).send({
+      status: 200,
+      data: updates,
+    }));
+}; // GET ALL UPDATES
