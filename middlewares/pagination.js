@@ -56,22 +56,3 @@ function paginateResults(model) {
 }
 
 module.exports = paginateResults;
-
-////////////////////////////
-// const { rows } = Country.findAndCountAll({
-//   where: {
-//     continent: {
-//       [Op.eq]: continent
-//     }
-//   },
-//   offset: startIndex,
-//   limit: endIndex
-// })
-
-///////////////
-// SELECT country.name
-// FROM Country
-// JOIN CountryActivity ON CountryActivity.countryId = Country.id
-// JOIN Activity ON Activity.id = CountryActivity.activityId
-// WHERE Country.continent = 'America' AND Activity.name = 'soccer'
-// ORDER BY ASC;

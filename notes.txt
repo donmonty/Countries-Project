@@ -1,0 +1,33 @@
+////////////////////////////
+`const { rows } = models.Country.findAll({
+  where: {
+    continent: 'America'
+  },
+  include: [{
+    model: models.Activity,
+    //attributes: ['name'],
+    where: {
+      name: 'buceo'
+    }
+  }],
+})`
+
+///////////////
+`
+Imagina que tengo estos modelos en una relacion MANY-TO-MANY:
+
+Country <-- Country_Activity --> Activity
+
+Quiero seleccionar todos los paises cuyo continente sea 'America' y que cuenten con la actividad de 'buceo'
+
+
+SELECT Country.name
+FROM Country
+JOIN CountryActivity ON CountryActivity.countryId = Country.id
+JOIN Activity ON Activity.id = CountryActivity.activityId
+WHERE Country.continent = 'America' AND Activity.name = 'soccer'
+ORDER BY ASC;
+
+Necesito traducir la query anterior a Sequelize
+
+`

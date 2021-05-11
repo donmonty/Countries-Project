@@ -29,12 +29,12 @@ module.exports = {
       })
     })
 
-    await queryInterface.bulkInsert('Country', countriesArray);
+    await queryInterface.bulkInsert('country', countriesArray);
     
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('Country', null);
+    await queryInterface.bulkDelete('country', null);
     /**
      * Add commands to revert seed here.
      *

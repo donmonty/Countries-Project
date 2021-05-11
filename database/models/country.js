@@ -1,6 +1,12 @@
 
 module.exports = (sequelize, DataTypes) => {
   const Country = sequelize.define('Country', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false
@@ -31,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     }
 
-  }, { tableName: 'Country' });
+  }, { tableName: 'country' });
 
   Country.associate = function(models) {
     Country.belongsToMany(models.Activity, { through: 'CountryActivity' })

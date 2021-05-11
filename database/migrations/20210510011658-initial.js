@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Country', {
+    await queryInterface.createTable('country', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -48,7 +48,7 @@ module.exports = {
       },
     });
 
-    await queryInterface.createTable('Activity',{
+    await queryInterface.createTable('activity',{
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -78,27 +78,35 @@ module.exports = {
       },
     });
 
-    await queryInterface.createTable('CountryActivity', {
+    await queryInterface.createTable('country_activity', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
       },
-      countryId: {
+      CountryId: {
         type: Sequelize.INTEGER,
         references: {
           key: 'id',
-          model: 'Country'
+          model: 'country'
         }
       },
-      activityId: {
+      ActivityId: {
         type: Sequelize.INTEGER,
         references: {
           key: 'id',
-          model: 'Activity'
+          model: 'activity'
         }
-      }
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: true
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: true
+      },
     })
     /**
      * Add altering commands here.
@@ -109,9 +117,9 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('CountryActivity');
-    await queryInterface.dropTable('Activity');
-    await queryInterface.dropTable('Country');
+    await queryInterface.dropTable('country_activity');
+    await queryInterface.dropTable('activity');
+    await queryInterface.dropTable('country');
     /**
      * Add reverting commands here.
      *
