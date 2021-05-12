@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 
 function paginateResults(model) {
   return async (req, res, next) => {
@@ -39,6 +40,30 @@ function paginateResults(model) {
       results.previous = {
         page: page - 1,
         limit: limit
+      }
+    }
+
+    // if 'name' is given in querystring, perform a search by name
+    if (req.query.name) {
+      const countryName = req.query.name;
+      try {
+        results.results = await model.findAndCountAll({
+          offset: startIndex,
+          limit: endIndex,
+          where: {
+            name: {
+              [Op.like]: `%${countryName}%`
+            }
+          }
+        });
+
+        // If no matches are found, return appropriate message
+        if (results.results.count === 0) return res.status(404).json({ message: 'No matches found!'});
+
+        res.paginatedResults = results;
+        next();
+      } catch (error) {
+        return res.status(500).json({ message: error.message });
       }
     }
 
