@@ -55,6 +55,7 @@ VALUES
   (DEFAULT,48,1,'2021-05-11 07:39:08.163 +00:00','2021-05-11 07:39:08.163 +00:00')
   RETURNING "id","CountryId","ActivityId","createdAt","updatedAt";
 
+/////////////////////////////////////////////////////
 
 DB.deals.findAll({
     where: {
@@ -120,3 +121,75 @@ DB.deals.findAll({
       data: updates,
     }));
 }; // GET ALL UPDATES
+
+
+
+
+
+SELECT "Country"."id", "Country"."name", "Activities"."id" AS "Activities.id", "Activities"."name" AS "Activities.name", "Activities"."difficulty" AS "Activities.difficulty", "Activities"."duration" AS "Activities
+.duration", "Activities"."season" AS "Activities.season", "Activities"."createdAt" AS "Activities.createdAt", "Activities"."updatedAt" AS "Activities.updatedAt", "Activities->CountryActivity"."id" AS "Activities.CountryActivity.id", "
+Activities->CountryActivity"."CountryId" AS "Activities.CountryActivity.CountryId", "Activities->CountryActivity"."ActivityId" AS "Activities.CountryActivity.ActivityId", "Activities->CountryActivity"."createdAt" AS "Activities.Countr
+yActivity.createdAt", "Activities->CountryActivity"."updatedAt" AS "Activities.CountryActivity.updatedAt"
+
+FROM "country" AS "Country"
+
+INNER JOIN ( "country_activity" AS "Activities->CountryActivity" INNER JOIN "activity" AS "Activities"ON "Activities"."id" = "Activities->CountryActivity"."ActivityId") ON "Country"."id" = "Activities->CountryActivity"."CountryId" AND "Activities"."name" = 'Soccer' WHERE "Country"."continent" = 'Americas' ORDER BY "Country"."name"
+ASC;
+
+
+
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+
+EXAMPLE QUERY STRINGS:
+========================
+let { name, continent, activity, order, page, limit } = req.query;
+
+......................................................
+Name:       V
+Continent:  V
+Activity:   V
+
+name=a&continent=Americas&activity=Ski
+......................................................
+Name:       V
+Continent:  V
+Activity:   X
+
+name=ana&continent=Americas
+......................................................
+Name:       V
+Continent:  X
+Activity:   X
+
+name=bra
+......................................................
+Name:       X
+Continent:  X
+Activity:   X
+
+......................................................
+Name:       V
+Continent:  X
+Activity:   V
+
+name=ance&activity=Ski
+......................................................
+Name:       X
+Continent:  V
+Activity:   V
+
+continent=Americas&activity=Ski
+......................................................
+Name:       X
+Continent:  V
+Activity:   X
+
+continent=Americas
+......................................................
+Name:       X
+Continent:  X
+Activity:   V
+
+activity=Ski
+......................................................

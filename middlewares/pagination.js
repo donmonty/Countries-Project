@@ -52,7 +52,7 @@ function paginateResults(model) {
           limit: endIndex,
           where: {
             name: {
-              [Op.like]: `%${countryName}%`
+              [Op.iLike]: `%${countryName}%`
             }
           }
         });
