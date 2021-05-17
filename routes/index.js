@@ -7,6 +7,7 @@ const router = Router();
 
 
 // ROUTES
+router.get('/activity', getActivities);
 router.post('/activity', createActivity);
 router.get('/countries', filters(), getCountries);
 //router.get('/countries', paginatedResults(models.Country), getCountries);
@@ -96,6 +97,17 @@ async function createActivity(req, res) {
   res.status(200).json({newActivity});
 }
 
+////// GET ALL ACTIVITIES ////////////
+//======================================
+async function getActivities(req, res) {
+  try {
+    response = await models.Activity.findAll();
+    console.log('ACTIVITIES: ', response)
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+}
 
 
 
