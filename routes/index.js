@@ -1,6 +1,5 @@
 const { Router } = require('express');
 const models = require('../database/models');
-const paginatedResults = require('../middlewares/pagination');
 const filters = require('../middlewares/filters')
 
 const router = Router();
@@ -10,7 +9,6 @@ const router = Router();
 router.get('/activity', getActivities);
 router.post('/activity', createActivity);
 router.get('/countries', filters(), getCountries);
-//router.get('/countries', paginatedResults(models.Country), getCountries);
 router.get('/countries/:code', getCountryById);
 
 
@@ -56,45 +54,49 @@ async function createActivity(req, res) {
   const { name, difficulty, duration, season, countries } = req.body;
 
   // Check for required fields
-  if (!name || name === '') return res.status(400).json({ message: 'Name is required.'});
-
-  // Fecth countries from the DB for the activity
-  const selectedCountries = [];
-
-  try {
-    countries.forEach(async country => {
-      const record = await models.Country.findOne({
-        //attributes: "id",
-        where: { name: country }
-      });
-      selectedCountries.push(record);
-    })  
-  } catch (error) {
-    res.status(500).send(error);
-  }
-  
-  console.log(selectedCountries.dataValues);
+  if (!name) return res.status(400).json({ message: 'Name is required.'});
 
   // Ceate new activity
   let newActivity;
   try {
     newActivity = await models.Activity.create({
       name,
-      difficulty,
-      duration,
-      season,
+      difficulty: parseInt(difficulty),
+      duration: parseInt(duration),
+      season: season.toLowerCase(),
       createdAt: new Date(),
       updatedAt: new Date()
     });  
   } catch (error) {
-    res.status(500).send(error);
+    return res.status(500).send(error);
   }
+
+  // If countries are provided, fecth countries from the DB 
+  // and link them to the activity
+  if ((countries && countries.length !== 0) && countries[0] !== "") {
+    const selectedCountries = [];
   
-  // Link activity to countries
-  await newActivity.addCountries(selectedCountries);
+    try {
+      countries.forEach(async country => {
+        const record = await models.Country.findOne({
+          //attributes: "id",
+          where: { name: country }
+        });
+        selectedCountries.push(record);
+      })
+      // Link activity to countries
+      await newActivity.addCountries(selectedCountries);
+      // Return response
+      return res.status(200).json(newActivity);  
+      
+    } catch (error) {
+      return res.status(500).send(error);
+    }
+    //console.log(selectedCountries.dataValues);
+  }
 
   // Return response
-  res.status(200).json({newActivity});
+  res.status(200).json(newActivity);
 }
 
 ////// GET ALL ACTIVITIES ////////////
