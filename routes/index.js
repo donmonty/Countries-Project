@@ -71,19 +71,26 @@ async function createActivity(req, res) {
     return res.status(500).send(error);
   }
 
+  console.log('////////////////////////////////////')
+  console.log("New Activity: ", newActivity);
+
   // If countries are provided, fecth countries from the DB 
   // and link them to the activity
   if ((countries && countries.length !== 0) && countries[0] !== "") {
     const selectedCountries = [];
   
     try {
-      countries.forEach(async country => {
-        const record = await models.Country.findOne({
+
+      for (let country of countries) {
+        let record = await models.Country.findOne({
           //attributes: "id",
           where: { name: country }
         });
         selectedCountries.push(record);
-      })
+      }
+
+      console.log('////////////////////////////////////')
+      console.log("Countries Array: ", selectedCountries);
       // Link activity to countries
       await newActivity.addCountries(selectedCountries);
       // Return response
@@ -92,7 +99,6 @@ async function createActivity(req, res) {
     } catch (error) {
       return res.status(500).send(error);
     }
-    //console.log(selectedCountries.dataValues);
   }
 
   // Return response
