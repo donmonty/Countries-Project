@@ -20,7 +20,7 @@ if (config.url) {
   // console.log("/////////////////////// CONFIG VARS //////////////////////")
   //sequelize = new Sequelize(config.database, config.username, config.password, config);
 
-  sequelize = new Sequelize(`postgres://${config.username}:${config.password}@${config.localhost}:5432/${config.database}`, {
+  sequelize = new Sequelize(`postgres://${config.username}:${config.password}@${config.host}:5432/${config.database}`, {
     logging: true, // set to console.log to see the raw SQL queries
     native: false, // lets Sequelize know we can use pg-native for ~30% more speed
   });
