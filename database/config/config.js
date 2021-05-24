@@ -28,7 +28,7 @@ module.exports = {
   "test": {
     "username": "postgres",
     "password": 398845110,
-    "database": "countries_test",
+    "database": "testing_countries",
     "host": "localhost",
     "dialect": "postgres"
   },

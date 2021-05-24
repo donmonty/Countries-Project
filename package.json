@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "NODE_ENV=test jest",
     "migrate": "npx sequelize db:migrate",
     "migrate:reset": "npx sequelize db:migrate:undo:all && npm run migrate",
     "seed-data": "npx sequelize db:seed:all",
