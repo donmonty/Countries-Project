@@ -1,19 +1,45 @@
-require('dotenv').config();
+require('dotenv').config({ path: __dirname + `/../.env` });
+
+// module.exports = {
+//   development: {
+//     url: process.env.DEV_DATABASE_URL,
+//     dialect: 'postgres',
+//   },
+//   test: {
+//     url: process.env.TEST_DATABASE_URL,
+//     dialect: 'postgres',
+//   },
+//   production: {
+//     //url: process.env.DATABASE_URL,
+//     //dialect: 'postgres',
+//   },
+// };
+
 
 module.exports = {
-  development: {
-    url: process.env.DEV_DATABASE_URL,
-    dialect: 'postgres',
+
+  "development": {
+    "username": "postgres",
+    "password": 398845110,
+    "database": "countries_test",
+    "host": "localhost",
+    "dialect": "postgres"
   },
-  // test: {
-  //   url: process.env.TEST_DATABASE_URL,
-  //   dialect: 'postgres',
-  // },
-  // production: {
-  //   url: process.env.DATABASE_URL,
-  //   dialect: 'postgres',
-  // },
-};
+  "test": {
+    "username": "postgres",
+    "password": 398845110,
+    "database": "countries_test",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": 398845110,
+    "database": "countries_test",
+    "host": "localhost",
+    "dialect": "postgres"
+  }
+}
 
 
 

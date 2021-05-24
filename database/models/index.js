@@ -1,5 +1,6 @@
 'use strict';
 
+
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
@@ -10,10 +11,16 @@ const db = {};
 
 let sequelize;
 if (config.url) {
+  console.log("//////////////// CONFIG URL OK /////////////////")
   //sequelize = new Sequelize(process.env[config.url], config);
   sequelize = new Sequelize(config.url, config);
 } else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
+  // console.log("/////////////////////// CONFIG VARS //////////////////////")
+  //sequelize = new Sequelize(config.database, config.username, config.password, config);
+  sequelize = new Sequelize("postgres://postgres:398845110@localhost:5432/countries_test", {
+    logging: true, // set to console.log to see the raw SQL queries
+    native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+  });
 }
 // if (config.use_env_variable) {
 //   sequelize = new Sequelize(process.env[config.use_env_variable], config);

@@ -44,6 +44,7 @@ async function getCountryById(req, res) {
     return res.status(200).json({ data: country });
 
   } catch (error) {
+    console.log("//// ERROR", error)
     return res.status(500).json({ message: 'Something went wrong!'});
   }
 }
