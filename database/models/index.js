@@ -1,6 +1,7 @@
 'use strict';
 
 
+const { Console } = require('console');
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
@@ -9,7 +10,9 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.js')[env];
 const db = {};
 
+console.log("/// ENVIRONMENT", env)
 console.log("/// CONFIG VALUE:", config)
+console.log("//// CONFIG URL:", config.url)
 
 let sequelize;
 if (config.url) {
@@ -21,15 +24,16 @@ if (config.url) {
   //sequelize = new Sequelize(config.database, config.username, config.password, config);
 
   sequelize = new Sequelize(`postgres://${config.username}:${config.password}@${config.host}:5432/${config.database}`, {
-    logging: true, // set to console.log to see the raw SQL queries
-    native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+    logging: true, 
+    native: false, 
   });
 
   ////////////// THIS IS THE SAFEGUARD, DO NOT DELETE!!!!!  /////////////////////
   //////////////////////////////////////////////////////////////////////////////////
-  // sequelize = new Sequelize("postgres://postgres:398845110@localhost:5432/countries_test", {
-  //   logging: true, // set to console.log to see the raw SQL queries
-  //   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+  // console.log("//// SAFEGAURD ACTIVATED!")
+  // sequelize = new Sequelize("postgres://postgres:398845110@localhost:5432/countries_extra", {
+  //   logging: true, 
+  //   native: false, 
   // });
 }
 // if (config.use_env_variable) {

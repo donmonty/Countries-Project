@@ -20,7 +20,7 @@ module.exports = {
         continent: country.region,
         code: country.alpha3Code,
         capital: country.capital,
-        subregion: country.region,
+        subregion: country.subregion,
         area: country.area,
         population: country.population,
         flag: country.flag,

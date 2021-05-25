@@ -18,24 +18,45 @@ require('dotenv').config({ path: __dirname + `/../.env` });
 
 module.exports = {
 
+  // "development": {
+  //   "username": process.env.DEV_DB_USER,
+  //   "password": process.env.DEV_DB_PASSWORD,
+  //   "database": process.env.DEV_DB_NAME,
+  //   "host": process.env.DEV_DB_HOST,
+  //   "dialect": "postgres"
+  // },
+
   "development": {
     "username": "postgres",
-    "password": 398845110,
-    "database": "countries_test",
+    "password": "398845110",
+    "database": "countries_extra",
     "host": "localhost",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "url": process.env.DEV_DATABASE_URL
   },
+
   "test": {
     "username": "postgres",
-    "password": 398845110,
-    "database": "testing_countries",
+    "password": "398845110",
+    "database": "countries_test",
     "host": "localhost",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "url": process.env.TEST_DATABASE_URL
   },
+
+  // "test": {
+  //   "username": "postgres",
+  //   "password": 398845110,
+  //   "database": "testing_countries",
+  //   "host": "localhost",
+  //   "dialect": "postgres"
+  // },
+
+
   "production": {
     "username": "postgres",
     "password": 398845110,
-    "database": "countries_test",
+    "database": "countries_production",
     "host": "localhost",
     "dialect": "postgres"
   }

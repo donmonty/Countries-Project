@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const models = require('../database/models');
-const filters = require('../middlewares/filters')
+// const filters = require('../middlewares/filters')
+const pagination = require("../middlewares/pagination2")
 
 const router = Router();
 
@@ -8,7 +9,8 @@ const router = Router();
 // ROUTES
 router.get('/activity', getActivities);
 router.post('/activity', createActivity);
-router.get('/countries', filters(), getCountries);
+router.get('/countries', pagination(), getCountries);
+// router.get('/countries', filters(), getCountries);
 router.get('/countries/:code', getCountryById);
 
 
