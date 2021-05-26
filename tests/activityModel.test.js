@@ -24,6 +24,22 @@ describe('Activity model', () => {
     expect(mariachi.name).toEqual("Mariachi");
   });
 
+  it("should not create a new model if a required filed is missing", async () => {
+    try {
+      const pyramids = await db.Activity.create({
+        name: null,
+        difficulty: 1,
+        duration: 90,
+        season: "winter",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      })
+    } catch (error) {
+      //console.log("/////////////////////////////// Error", error.errors[0].type)
+      expect(error.errors[0].type).toEqual("notNull Violation");
+    }
+  })
+
   it("should update the model", async () => {
     const modelData = {
       name: "Tequila Express",

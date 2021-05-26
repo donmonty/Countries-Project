@@ -1,7 +1,6 @@
 'use strict';
 
 
-const { Console } = require('console');
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
@@ -24,7 +23,7 @@ if (config.url) {
   //sequelize = new Sequelize(config.database, config.username, config.password, config);
 
   sequelize = new Sequelize(`postgres://${config.username}:${config.password}@${config.host}:5432/${config.database}`, {
-    logging: true, 
+    logging: false, 
     native: false, 
   });
 
