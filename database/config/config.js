@@ -1,4 +1,5 @@
-require('dotenv').config({ path: __dirname + `/../.env` });
+require('dotenv').config()
+// require('dotenv').config({ path: __dirname + `/../.env` });
 
 // module.exports = {
 //   development: {
@@ -18,31 +19,40 @@ require('dotenv').config({ path: __dirname + `/../.env` });
 
 module.exports = {
 
+  "development": {
+    "username": process.env.DEV_DB_USER,
+    "password": process.env.DEV_DB_PASSWORD,
+    "database": process.env.DEV_DB_NAME,
+    "host": process.env.DEV_DB_HOST,
+    "dialect": "postgres"
+  },
+
   // "development": {
-  //   "username": process.env.DEV_DB_USER,
-  //   "password": process.env.DEV_DB_PASSWORD,
-  //   "database": process.env.DEV_DB_NAME,
-  //   "host": process.env.DEV_DB_HOST,
-  //   "dialect": "postgres"
+  //   "username": "postgres",
+  //   "password": "398845110",
+  //   "database": "countries_extra",
+  //   "host": "localhost",
+  //   "dialect": "postgres",
+  //   //"url": process.env.DEV_DATABASE_URL
   // },
 
-  "development": {
-    "username": "postgres",
-    "password": "398845110",
-    "database": "countries_extra",
-    "host": "localhost",
+  "test": {
+    "username": process.env.TEST_DB_USER,
+    "password": process.env.TEST_DB_PASSWORD,
+    "database": process.env.TEST_DB_NAME,
+    "host": process.env.TEST_DB_HOST,
     "dialect": "postgres",
-    "url": process.env.DEV_DATABASE_URL
+    //"url": process.env.TEST_DATABASE_URL
   },
 
-  "test": {
-    "username": "postgres",
-    "password": "398845110",
-    "database": "countries_test",
-    "host": "localhost",
-    "dialect": "postgres",
-    "url": process.env.TEST_DATABASE_URL
-  },
+  // "test": {
+  //   "username": "postgres",
+  //   "password": "398845110",
+  //   "database": "countries_test",
+  //   "host": "localhost",
+  //   "dialect": "postgres",
+  //   "url": process.env.TEST_DATABASE_URL
+  // },
 
   // "test": {
   //   "username": "postgres",
