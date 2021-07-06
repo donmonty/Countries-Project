@@ -1,19 +1,76 @@
-require('dotenv').config();
+require('dotenv').config()
+// require('dotenv').config({ path: __dirname + `/../.env` });
+
+// module.exports = {
+//   development: {
+//     url: process.env.DEV_DATABASE_URL,
+//     dialect: 'postgres',
+//   },
+//   test: {
+//     url: process.env.TEST_DATABASE_URL,
+//     dialect: 'postgres',
+//   },
+//   production: {
+//     //url: process.env.DATABASE_URL,
+//     //dialect: 'postgres',
+//   },
+// };
+
 
 module.exports = {
-  development: {
-    url: process.env.DEV_DATABASE_URL,
-    dialect: 'postgres',
+
+  "development": {
+    "username": process.env.DEV_DB_USER,
+    "password": process.env.DEV_DB_PASSWORD,
+    "database": process.env.DEV_DB_NAME,
+    "host": process.env.DEV_DB_HOST,
+    "dialect": "postgres"
   },
-  // test: {
-  //   url: process.env.TEST_DATABASE_URL,
-  //   dialect: 'postgres',
+
+  // "development": {
+  //   "username": "postgres",
+  //   "password": "398845110",
+  //   "database": "countries_extra",
+  //   "host": "localhost",
+  //   "dialect": "postgres",
+  //   //"url": process.env.DEV_DATABASE_URL
   // },
-  // production: {
-  //   url: process.env.DATABASE_URL,
-  //   dialect: 'postgres',
+
+  "test": {
+    "username": process.env.TEST_DB_USER,
+    "password": process.env.TEST_DB_PASSWORD,
+    "database": process.env.TEST_DB_NAME,
+    "host": process.env.TEST_DB_HOST,
+    "dialect": "postgres",
+    //"url": process.env.TEST_DATABASE_URL
+  },
+
+  // "test": {
+  //   "username": "postgres",
+  //   "password": "398845110",
+  //   "database": "countries_test",
+  //   "host": "localhost",
+  //   "dialect": "postgres",
+  //   "url": process.env.TEST_DATABASE_URL
   // },
-};
+
+  // "test": {
+  //   "username": "postgres",
+  //   "password": 398845110,
+  //   "database": "testing_countries",
+  //   "host": "localhost",
+  //   "dialect": "postgres"
+  // },
+
+
+  "production": {
+    "username": "postgres",
+    "password": 398845110,
+    "database": "countries_production",
+    "host": "localhost",
+    "dialect": "postgres"
+  }
+}
 
 
 

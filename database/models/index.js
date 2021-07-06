@@ -1,5 +1,6 @@
 'use strict';
 
+
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
@@ -8,12 +9,31 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.js')[env];
 const db = {};
 
+console.log("/// ENVIRONMENT", env)
+console.log("/// CONFIG VALUE:", config)
+console.log("//// CONFIG URL:", config.url)
+
 let sequelize;
 if (config.url) {
+  console.log("//////////////// CONFIG URL OK /////////////////")
   //sequelize = new Sequelize(process.env[config.url], config);
   sequelize = new Sequelize(config.url, config);
 } else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
+  // console.log("/////////////////////// CONFIG VARS //////////////////////")
+  //sequelize = new Sequelize(config.database, config.username, config.password, config);
+
+  sequelize = new Sequelize(`postgres://${config.username}:${config.password}@${config.host}:5432/${config.database}`, {
+    logging: false, 
+    native: false, 
+  });
+
+  ////////////// THIS IS THE SAFEGUARD, DO NOT DELETE!!!!!  /////////////////////
+  //////////////////////////////////////////////////////////////////////////////////
+  // console.log("//// SAFEGAURD ACTIVATED!")
+  // sequelize = new Sequelize("postgres://postgres:398845110@localhost:5432/countries_extra", {
+  //   logging: true, 
+  //   native: false, 
+  // });
 }
 // if (config.use_env_variable) {
 //   sequelize = new Sequelize(process.env[config.use_env_variable], config);
